@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import userPhoto from './assets/WhatsApp Image 2026-08-13 at 3.45.27 PM.jpeg';
+import birthdayMusic from './assets/WhatsApp Audio 2026-08-13 at 10.18.35 PM.mpeg';
 
 const App = () => {
   const confettiRef = useRef(null);
@@ -129,39 +130,11 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
     }
   ];
 
-  // Confetti effect
+  // Confetti effect - DISABLED
   useEffect(() => {
     const container = confettiRef.current;
     if (!container) return;
-
-    const emojis = ['🎉', '🎈', '💖', '✨', '🥳', '🌸', '🎀', '💕', '🎂', '🌟', '🪅', '🌈', '⭐', '🎊'];
-    const count = currentPage === pages.length - 1 ? 50 : 25;
-
     container.innerHTML = '';
-    const fragment = document.createDocumentFragment();
-
-    for (let i = 0; i < count; i++) {
-      const el = document.createElement('span');
-      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      
-      const left = Math.random() * 100;
-      const delay = (Math.random() * 5).toFixed(2);
-      const size = 16 + Math.floor(Math.random() * 24);
-      const duration = (6 + Math.random() * 10).toFixed(2);
-      const opacity = 0.5 + Math.random() * 0.5;
-
-      el.style.left = left + '%';
-      el.style.animationDelay = delay + 's';
-      el.style.fontSize = size + 'px';
-      el.style.animationDuration = duration + 's';
-      el.style.opacity = opacity;
-      el.style.transform = `rotate(${Math.random() * 60 - 30}deg)`;
-
-      fragment.appendChild(el);
-    }
-
-    container.appendChild(fragment);
-
     return () => {
       container.innerHTML = '';
     };
@@ -651,6 +624,11 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
 
   return (
     <div style={styles.container}>
+      {/* Birthday Music */}
+      <audio autoPlay loop style={{ display: 'none' }}>
+        <source src={birthdayMusic} type="audio/mpeg" />
+      </audio>
+
       {/* Animated Background Blobs */}
       <div style={styles.backgroundBlobs}>
         <div style={styles.blob1}></div>
