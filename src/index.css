@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom utilities */
+@layer components {
+	.typing {
+		border-right: 2px solid rgba(255,255,255,0.75);
+		white-space: nowrap;
+		overflow: hidden;
+	}
+}
+
+html, body, #root {
+	height: 100%;
+}
+
+/* Use a plain CSS gradient instead of @apply for gradient color stops
+	 because some Tailwind color stop utilities (e.g. `from-*`, `via-*`) cannot
+	 be used with `@apply` in all setups. */
+body {
+	background: linear-gradient(to bottom, #fff1f2 0%, #ffffff 50%, #eef2ff 100%);
+	color: #1f2937; /* Tailwind text-gray-800 */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* simple confetti emojis animation */
+.confetti {
+	position: absolute;
+	pointer-events: none;
+	inset: 0;
+	overflow: hidden;
+}
+.confetti span {
+	position: absolute;
+	top: -10%;
+	font-size: 20px;
+	animation: fall 3s linear infinite;
+	opacity: 0.95;
+}
+@keyframes fall {
+	0% { transform: translateY(-10vh) rotate(0deg); }
+	100% { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* component-specific plain CSS removed — using Tailwind utility classes in JSX */
+
+/* Photo animation */
+.photo-anim {
+	transform: translateY(0px);
+	transition: transform 450ms cubic-bezier(.2,.8,.2,1), box-shadow 250ms;
+	animation: floaty 4s ease-in-out infinite;
+}
+.photo-anim:hover {
+	transform: translateY(-6px) scale(1.03) rotate(-1deg);
+}
+@keyframes floaty {
+	0% { transform: translateY(0px); }
+	50% { transform: translateY(-8px); }
+	100% { transform: translateY(0px); }
+}
+
+/* small sparkle using pseudo-element via wrapper not possible in img, so add a simple animated emoji overlay in JS if desired */
