@@ -1,22 +1,26 @@
 import React, { useEffect, useRef, useState } from 'react';
 import userPhoto from './assets/WhatsApp Image 2026-08-13 at 3.45.27 PM.jpeg';
-import childhood1 from './assets/childhood1.jpeg';
-import childhood2 from './assets/childhood2.jpeg';
 
 const App = () => {
   const confettiRef = useRef(null);
-    const photoRef = useRef(null);
-    const contentRef = useRef(null);
+  const photoRef = useRef(null);
+  const contentRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageError, setImageError] = useState({});
-    const [contentTopPad, setContentTopPad] = useState(null);
+  const [contentTopPad, setContentTopPad] = useState(null);
 
   // Content data
   const content = {
     intro: `Hey Nandu! 🥰\nYour birthday deserved more than just a text. So I made you this little something. 😍\nOpen this → Sit back and just go with it :)`,
     howItStarted: `One random Snapchat request. That's literally how it started. No big introduction. No idea where it would go. Just one random request that somehow turned into 600+ days of you being a part of my life. Funny how some random things end up becoming important ♡`,
-    days: `600+ days of knowing you. From random conversations to completely unnecessary talks, from silly moments to serious ones. Somehow 600+ days went by without even feeling like it and tbh I'm really glad they did.`,
+    days: `I didn't realize how naturally you became part of my routine over these 600+ days. You've been a constant support, motivator, everything. Started with just one random Snapchat request and somehow that turned into 600+ days of knowing you. Appudu manam intha long ga continue avutham ani assalu anukoledu.
+    
+Over these days I've gotten to know so many different sides of you - the things that make you happy, the things you get excited about, the things you overthink, the way you care about people, the little reactions you have, and all those small details that maybe you don't even realise someone notices.
+
+I like how you get excited about even the smallest things, the way you care about the people close to you, your random reactions, the way you talk.
+
+THANK YOU for always being someone I can talk to, for listening to me, supporting me, and for being there whenever I needed you.`,
     littleThings: [
       "Your sense of style",
       "Your personality",
@@ -26,7 +30,31 @@ const App = () => {
       "Your random side",
       "The way you're completely yourself with the people you're comfortable with",
     ],
-    closing: `For your birthday I hope all those little things you've been wishing for actually happen — more reasons to smile, less overthinking, more memories to hold onto, and people who make you feel truly valued. You deserve all the good things Nandu. ♡ Happiest birthdayyyyy Nandu!! ❤️🥹`,
+    closing: `When things feel too much, find me. When you're hurt, disappointed, tired, or just need someone to listen, come to me. You never have to explain everything or pretend you're okay with me, and please never feel like you're a burden.
+
+I may not always have the right words or be able to fix things, but I'll always listen, stay, and be there for you.
+
+Keep growing, keep shining, learning, and keep becoming the person your heart has always dreamed of. It's really nice to see you becoming more passionate.
+
+I'm grateful for the comfort and understanding we share. In some ways you may never fully realize you've given courage, comfort, and a sense of completeness to my days. If at any point I've made mistakes, misunderstood things, or unintentionally disrespected you, I'm sorry - that was never my intention.
+
+THANK YOU for trusting me, for sharing little parts of your life with me, for listening to me.
+
+For your birthday, hope all those little things you've been wishing for actually happen. You have plenty of reasons to smile and there's a lot more that makes you happy - more places to go, more little things to get excited about, more memories to hold onto, and people around you who make you feel truly valued. I wish this birthday brings you a year full of everything you deserve - more happiness, less overthinking, more reasons to smile, and a lot of moments that you'll want to remember.
+
+You deserve all the good things Nandu. ♡`,
+    final: `You've been a part of my life for 600+ days now and tbh I'm really glad that one random Snapchat request somehow brought you into my life. Somewhere along the way you became someone whose presence started meaning a lot to me. No matter where life takes you, I'll always wish the best for you, cheer for you, and be happy to see you doing well.
+
+Have the happiest birthday Nandu. ♡
+You deserve beautiful things, beautiful moments, and a year that gives you plenty of reasons to look back and smile.
+
+Thank you for being you.
+Thank you for being part of these 600+ days, and thank you for making a random Snapchat request turn into something I'll always be glad happened.
+
+And I hope we still have plenty of random conversations, unnecessary arguments, stupid jokes, late replies, annoying each other, and everything in between - coz honestly I've gotten way too used to having you around 😭🫶
+
+Finally, once again -
+HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
   };
 
   // Fallback images
@@ -45,7 +73,7 @@ const App = () => {
     { bg: 'linear-gradient(135deg, #fecdd3, #fecaca, #fce7f3)', accent: '#f43f5e' },
   ];
 
-  // Page definitions with images
+  // Page definitions - removed childhood1 and childhood2 slides
   const pages = [
     {
       id: 'intro',
@@ -59,38 +87,16 @@ const App = () => {
       photoAlt: 'Nandu'
     },
     {
-      id: 'childhood1',
-      title: '👶 02 — Childhood Memories',
-      content: 'Look at this adorable little Nandu! From a cute kid to the amazing person you are today. Some things never change - that beautiful smile has always been there! ✨',
-      emoji: '👶',
-      isText: true,
-      showPhoto: true,
-      photo: childhood1,
-      fallbackEmoji: '🧒',
-      photoAlt: 'Childhood photo 1'
-    },
-    {
       id: 'howItStarted',
-      title: '💫 03 — How it started',
+      title: '💫 02 — How it started',
       content: content.howItStarted,
       emoji: '💫',
       isText: true,
       showPhoto: false
     },
     {
-      id: 'childhood2',
-      title: '🌟 04 — More Childhood Magic',
-      content: 'Another precious moment from the past! You\'ve always had that special sparkle. Growing up beautifully, inside and out. 🌟',
-      emoji: '🌟',
-      isText: true,
-      showPhoto: true,
-      photo: childhood2,
-      fallbackEmoji: '👧',
-      photoAlt: 'Childhood photo 2'
-    },
-    {
       id: 'days',
-      title: '💕 05 — 600+ days',
+      title: '💕 03 — 600+ days',
       content: content.days,
       emoji: '💕',
       isText: true,
@@ -98,7 +104,7 @@ const App = () => {
     },
     {
       id: 'littleThings',
-      title: '💝 06 — Little things',
+      title: '💝 04 — Little things',
       content: content.littleThings,
       emoji: '💝',
       isText: false,
@@ -106,9 +112,17 @@ const App = () => {
       showPhoto: false
     },
     {
-      id: 'final',
-      title: '🎂 07 — Final',
+      id: 'closing',
+      title: '🌷 05 — For you',
       content: content.closing,
+      emoji: '🌷',
+      isText: true,
+      showPhoto: false
+    },
+    {
+      id: 'final',
+      title: '🎂 06 — Final',
+      content: content.final,
       emoji: '🎂',
       isText: true,
       showPhoto: false
@@ -558,7 +572,7 @@ const App = () => {
     }
   };
 
-  // Ensure content is pushed below the photo when a photo is present (use enough space for larger heart)
+  // Ensure content is pushed below the photo when a photo is present
   styles.contentContainer.paddingTop = contentTopPad !== null ? `${contentTopPad}px` : (hasPhoto ? '220px' : '8px');
 
   // Add CSS animations
@@ -624,7 +638,6 @@ const App = () => {
     function updatePadding() {
       if (hasPhoto && photoRef.current) {
         const h = photoRef.current.offsetHeight || 176;
-        // add extra buffer
         setContentTopPad(h + 56);
       } else {
         setContentTopPad(8);
@@ -704,7 +717,6 @@ const App = () => {
                 </h1>
                 <p style={styles.subtitle}>✦ a little surprise, page by page</p>
                 <div style={styles.tags}>
-                  <span style={styles.tag('linear-gradient(135deg, #fce7f3, #fecdd3)', '#be185d')}>🎈 600+ days</span>
                   <span style={styles.tag('linear-gradient(135deg, #faf5ff, #fce7f3)', '#7c3aed')}>💖 special</span>
                   <span style={styles.tag('linear-gradient(135deg, #e0f2fe, #dbeafe)', '#1d4ed8')}>🌟 amazing</span>
                 </div>
@@ -752,7 +764,7 @@ const App = () => {
               <div style={styles.finalMessage}>
                 <div style={styles.finalEmoji}>🎂</div>
                 <p style={styles.finalText}>
-                  Happiest birthdayyyyy Nandu!! ❤️🥹
+                  HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹
                 </p>
                 <div style={styles.finalConfetti}>
                   <span style={styles.finalConfettiItem}>🎉</span>
