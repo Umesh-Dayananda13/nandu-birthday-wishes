@@ -11,6 +11,7 @@ const App = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageError, setImageError] = useState({});
   const [contentTopPad, setContentTopPad] = useState(null);
+  const [audioStarted, setAudioStarted] = useState(false);
 
   // Content data
   const content = {
@@ -75,7 +76,7 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
     { bg: 'linear-gradient(135deg, #fecdd3, #fecaca, #fce7f3)', accent: '#f43f5e' },
   ];
 
-  // Page definitions - removed childhood1 and childhood2 slides
+  // Page definitions
   const pages = [
     {
       id: 'intro',
@@ -131,6 +132,51 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
     }
   ];
 
+  // FIXED: Audio playback function
+  const startAudio = async () => {
+    if (audioStarted) return;
+    try {
+      const audio = audioRef.current;
+      if (!audio) return;
+      
+      // Reset to beginning
+      audio.currentTime = 0;
+      
+      // Try to play
+      await audio.play();
+      setAudioStarted(true);
+      console.log('Audio started successfully');
+    } catch (error) {
+      console.log('Audio play failed:', error);
+    }
+  };
+
+  // Try to start audio on any user interaction
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      startAudio();
+    };
+
+    // Listen for multiple events to catch all user interactions
+    const events = ['click', 'touchstart', 'touchend', 'keydown'];
+    events.forEach(event => {
+      document.addEventListener(event, handleUserInteraction, { passive: true });
+    });
+
+    return () => {
+      events.forEach(event => {
+        document.removeEventListener(event, handleUserInteraction);
+      });
+    };
+  }, []);
+
+  // Also try to start audio when page changes (user is interacting)
+  useEffect(() => {
+    if (currentPage > 0 && !audioStarted) {
+      startAudio();
+    }
+  }, [currentPage]);
+
   // Confetti effect - DISABLED
   useEffect(() => {
     const container = confettiRef.current;
@@ -142,6 +188,9 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
   }, [currentPage]);
 
   const nextPage = () => {
+    // Try to start audio on navigation
+    startAudio();
+    
     if (currentPage < pages.length - 1 && !isTransitioning) {
       setIsTransitioning(true);
       setTimeout(() => {
@@ -152,6 +201,9 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
   };
 
   const prevPage = () => {
+    // Try to start audio on navigation
+    startAudio();
+    
     if (currentPage > 0 && !isTransitioning) {
       setIsTransitioning(true);
       setTimeout(() => {
@@ -549,24 +601,6 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
   // Ensure content is pushed below the photo when a photo is present
   styles.contentContainer.paddingTop = contentTopPad !== null ? `${contentTopPad}px` : (hasPhoto ? '220px' : '8px');
 
-  // Handle mobile autoplay - unmute on first interaction
-  useEffect(() => {
-    const handleUserInteraction = () => {
-      if (audioRef.current) {
-        audioRef.current.muted = false;
-        audioRef.current.play().catch(err => console.log('Audio play error:', err));
-      }
-    };
-
-    document.addEventListener('click', handleUserInteraction, { once: true });
-    document.addEventListener('touchstart', handleUserInteraction, { once: true });
-
-    return () => {
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
-    };
-  }, []);
-
   // Add CSS animations
   useEffect(() => {
     const styleSheet = document.createElement("style");
@@ -643,9 +677,15 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
 
   return (
     <div style={styles.container}>
-      {/* Birthday Music */}
-      <audio ref={audioRef} autoPlay muted loop style={{ display: 'none' }}>
+      {/* Birthday Music - FIXED: removed autoPlay and muted */}
+      <audio 
+        ref={audioRef} 
+        loop 
+        style={{ display: 'none' }}
+        preload="auto"
+      >
         <source src={birthdayMusic} type="audio/mpeg" />
+        Your browser does not support the audio element.
       </audio>
 
       {/* Animated Background Blobs */}
