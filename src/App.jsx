@@ -6,6 +6,7 @@ const App = () => {
   const confettiRef = useRef(null);
   const photoRef = useRef(null);
   const contentRef = useRef(null);
+  const audioRef = useRef(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [imageError, setImageError] = useState({});
@@ -548,6 +549,24 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
   // Ensure content is pushed below the photo when a photo is present
   styles.contentContainer.paddingTop = contentTopPad !== null ? `${contentTopPad}px` : (hasPhoto ? '220px' : '8px');
 
+  // Handle mobile autoplay - unmute on first interaction
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      if (audioRef.current) {
+        audioRef.current.muted = false;
+        audioRef.current.play().catch(err => console.log('Audio play error:', err));
+      }
+    };
+
+    document.addEventListener('click', handleUserInteraction, { once: true });
+    document.addEventListener('touchstart', handleUserInteraction, { once: true });
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+  }, []);
+
   // Add CSS animations
   useEffect(() => {
     const styleSheet = document.createElement("style");
@@ -625,7 +644,7 @@ HAPPIEST BIRTHDAYyyyy Nandu!! 🩷🥹`
   return (
     <div style={styles.container}>
       {/* Birthday Music */}
-      <audio autoPlay loop style={{ display: 'none' }}>
+      <audio ref={audioRef} autoPlay muted loop style={{ display: 'none' }}>
         <source src={birthdayMusic} type="audio/mpeg" />
       </audio>
 
